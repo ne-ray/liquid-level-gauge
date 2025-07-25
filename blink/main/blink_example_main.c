@@ -95,7 +95,7 @@ void app_main(void)
     configure_led();
 
     while (1) {
-        ESP_LOGI(TAG, "Turning the LED %s!", s_led_state == true ? "ON" : "OFF");
+        ESP_LOGI(TAG, "Turning the LED %s!", s_led_state == true ? "OFF" : "ON");
         blink_led();
         /* Toggle the LED state */
         s_led_state = !s_led_state;
