@@ -36,6 +36,11 @@ static void configure_pin(void)
     gpio_reset_pin(LED_PIN);
     /* Set the GPIO as a push/pull output */
     gpio_set_direction(LED_PIN, GPIO_MODE_OUTPUT);
+
+    // PIN SET
+    gpio_reset_pin(CONTACT_PIN_1);
+    gpio_set_direction(CONTACT_PIN_1, GPIO_MODE_INPUT);  // Установить как вход
+    gpio_set_pull_mode(CONTACT_PIN_1, GPIO_PULLUP_ONLY); // Включить внутреннюю подтяжку вверх
 }
 
 void app_main(void)
@@ -44,11 +49,33 @@ void app_main(void)
     /* Configure the peripheral according to the LED type */
     configure_pin();
 
-    while (1) {
-        ESP_LOGI(TAG, "Turning the LED %s!", s_led_state == true ? "OFF" : "ON");
+    while (1)
+    {
+        // 3. Чтение состояния входного контакта
+        int contact_state = gpio_get_level(CONTACT_PIN_1);
+
+        uint8_t new_state = 0;
+
+        // 4. Логика управления светодиодом
+        if (contact_state == 0) {  // Если контакт замкнут (уровень LOW)
+            new_state = 0;         // Включить светодиод (HIGH)
+        } else{                    // Если контакт разомкнут (уровень HIGH)
+            new_state = 1;         // Выключить светодиод (LOW)
+        }
+
+        if (new_state != s_led_state) {
+            s_led_state = new_state;
+
+            if (new_state == 0) {
+                ESP_LOGI(TAG, "Contact open! LED ON.");
+            } else {
+                ESP_LOGI(TAG, "Contact close! LED OFF.");
+            }
+        }
+
         blink_led();
         /* Toggle the LED state */
-        s_led_state = !s_led_state;
+        // s_led_state = !s_led_state;
         vTaskDelay(CONFIG_CHECK_PERIOD / portTICK_PERIOD_MS);
     }
 }
