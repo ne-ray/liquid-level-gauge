@@ -11,7 +11,6 @@
 #include "freertos/task.h"
 #include "driver/gpio.h"
 #include "esp_log.h"
-#include "led_strip.h"
 #include "sdkconfig.h"
 
 static const char *TAG = "example";
@@ -22,8 +21,6 @@ static const char *TAG = "example";
 #define BLINK_GPIO CONFIG_BLINK_GPIO
 
 static uint8_t s_led_state = 0;
-
-#ifdef CONFIG_BLINK_LED_GPIO
 
 static void blink_led(void)
 {
@@ -38,10 +35,6 @@ static void configure_led(void)
     /* Set the GPIO as a push/pull output */
     gpio_set_direction(BLINK_GPIO, GPIO_MODE_OUTPUT);
 }
-
-#else
-#error "unsupported LED type"
-#endif
 
 void app_main(void)
 {
