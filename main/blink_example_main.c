@@ -1,11 +1,3 @@
-/* Blink Example
-
-   This example code is in the Public Domain (or CC0 licensed, at your option.)
-
-   Unless required by applicable law or agreed to in writing, this
-   software is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
-   CONDITIONS OF ANY KIND, either express or implied.
-*/
 #include <stdio.h>
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
@@ -37,10 +29,15 @@ static void configure_pin(void)
     /* Set the GPIO as a push/pull output */
     gpio_set_direction(LED_PIN, GPIO_MODE_OUTPUT);
 
-    // PIN SET
+    // PIN 1 SET
     gpio_reset_pin(CONTACT_PIN_1);
     gpio_set_direction(CONTACT_PIN_1, GPIO_MODE_INPUT);  // Установить как вход
     gpio_set_pull_mode(CONTACT_PIN_1, GPIO_PULLUP_ONLY); // Включить внутреннюю подтяжку вверх
+
+    // PIN 2 SET
+    gpio_reset_pin(CONTACT_PIN_2);
+    gpio_set_direction(CONTACT_PIN_2, GPIO_MODE_INPUT);  // Установить как вход
+    gpio_set_pull_mode(CONTACT_PIN_2, GPIO_PULLUP_ONLY); // Включить внутреннюю подтяжку вверх
 }
 
 void app_main(void)
@@ -52,23 +49,31 @@ void app_main(void)
     while (1)
     {
         // 3. Чтение состояния входного контакта
-        int contact_state = gpio_get_level(CONTACT_PIN_1);
+        int contact_state1 = gpio_get_level(CONTACT_PIN_1);
+        int contact_state2 = gpio_get_level(CONTACT_PIN_2);
 
         uint8_t new_state = 0;
 
         // 4. Логика управления светодиодом
-        if (contact_state == 0) {  // Если контакт замкнут (уровень LOW)
-            new_state = 0;         // Включить светодиод (HIGH)
-        } else{                    // Если контакт разомкнут (уровень HIGH)
-            new_state = 1;         // Выключить светодиод (LOW)
+        if (contact_state1 == 0 || contact_state2 == 0)
+        {                  // Если контакт замкнут (уровень LOW)
+            new_state = 0; // Включить светодиод (HIGH)
+        }
+        else
+        {                  // Если контакт разомкнут (уровень HIGH)
+            new_state = 1; // Выключить светодиод (LOW)
         }
 
-        if (new_state != s_led_state) {
+        if (new_state != s_led_state)
+        {
             s_led_state = new_state;
 
-            if (new_state == 0) {
+            if (new_state == 0)
+            {
                 ESP_LOGI(TAG, "Contact open! LED ON.");
-            } else {
+            }
+            else
+            {
                 ESP_LOGI(TAG, "Contact close! LED OFF.");
             }
         }

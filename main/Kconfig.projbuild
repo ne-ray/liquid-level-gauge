@@ -12,12 +12,12 @@ menu "Example Configuration"
     config CONTACT_PIN_GPIO_1
         int "Contact number 1 for validate GPIO number"
         range ENV_GPIO_RANGE_MIN ENV_GPIO_OUT_RANGE_MAX
-        default 16
+        default 21
 
     config CONTACT_PIN_GPIO_2
         int "Contact number 1 for validate GPIO number"
         range ENV_GPIO_RANGE_MIN ENV_GPIO_OUT_RANGE_MAX
-        default 17
+        default 23
 
     config CHECK_PERIOD
         int "Check GPIO connect period in ms"
