@@ -77,7 +77,7 @@ static void init_potentiometer(void)
     // --- 2. Конфигурация канала АЦП ---
     adc_oneshot_chan_cfg_t config = {
         .bitwidth = ADC_BITWIDTH_12, // Разрешение 12 бит (0-4095)
-        .atten = ADC_ATTEN_DB_11,    // Ослабление 11 дБ для измерения до ~3.3V
+        .atten = ADC_ATTEN_DB_12,    // Ослабление 11 дБ для измерения до ~3.3V
     };
     ESP_ERROR_CHECK(adc_oneshot_config_channel(adc1_handle, ADC_CHANNEL_POT, &config));
     ESP_LOGI(TAG, "Канал АЦП (GPIO%d) сконфигурирован.", POTENTIOMETER_PIN_1);
@@ -189,13 +189,13 @@ void app_main(void)
     }
 
     // TMP test
-    while (1)
-    {
-        get_clouser_pin1();
-        get_clouser_pin2();
-        get_potentiometer();
-        vTaskDelay(SLEEP_WAKEUP_TIMER / 10 / portTICK_PERIOD_MS);
-    }
+    // while (1)
+    // {
+    //     get_clouser_pin1();
+    //     get_clouser_pin2();
+    //     get_potentiometer();
+    //     vTaskDelay(SLEEP_WAKEUP_TIMER / portTICK_PERIOD_MS);
+    // }
 
     // --- 3. Настройка источников пробуждения для СЛЕДУЮЩЕГО глубокого сна ---
     next_wakeup_config();
