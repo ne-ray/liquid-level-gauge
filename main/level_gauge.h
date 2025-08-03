@@ -1,3 +1,4 @@
+#include <stdbool.h>
 #include "sdkconfig.h"
 
 #define LED_PIN CONFIG_LED_GPIO
@@ -26,7 +27,7 @@ void led_flash(int times, int delay_ms);
 /**
  * @brief Initialize the LED GPIO.
  */
-static void init_led(void);
+void init_led(void);
 
 /**
  * @brief Initialize the closure pins.
@@ -41,20 +42,19 @@ void init_potentiometer(void);
 /**
  * @brief Read the state of closure pin 1.
  */
-static void get_clouser_pin1(void);
+void get_clouser_pin1(void);
 
 /**
  * @brief Read the state of closure pin 2.
  */
-static void get_clouser_pin2(void);
+void get_clouser_pin2(void);
 
 /**
  * @brief Read the raw value from the potentiometer.
  */
-static void get_potentiometer(void);
+void get_potentiometer(void);
 
 /**
  * @brief Configure the next wakeup settings for the level gauge.
  */
-static void config_next_wakeup_level_gauge(void);
 void config_next_wakeup_level_gauge(void);
