@@ -42,17 +42,17 @@ void init_potentiometer(void);
 /**
  * @brief Read the state of closure pin 1.
  */
-void get_clouser_pin1(void);
+int get_clouser_pin1(void);
 
 /**
  * @brief Read the state of closure pin 2.
  */
-void get_clouser_pin2(void);
+int get_clouser_pin2(void);
 
 /**
  * @brief Read the raw value from the potentiometer.
  */
-void get_potentiometer(void);
+int get_potentiometer(void);
 
 /**
  * @brief Configure the next wakeup settings for the level gauge.

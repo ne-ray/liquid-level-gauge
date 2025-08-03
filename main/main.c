@@ -64,13 +64,19 @@ void app_main(void)
     }
 
     // TMP test
-    // while (1)
-    // {
-    //     get_clouser_pin1();
-    //     get_clouser_pin2();
-    //     get_potentiometer();
-    //     vTaskDelay(SLEEP_WAKEUP_TIMER / portTICK_PERIOD_MS);
-    // }
+    while (1)
+    {
+        int closure_1_state = get_clouser_pin1();
+        ESP_LOGI(TAG, "Состояние контакта 1: %s", closure_1_state ? "Не замкнут" : "Замкнут");
+
+        int closure_2_state = get_clouser_pin2();
+        ESP_LOGI(TAG, "Состояние контакта 1: %s", closure_1_state ? "Не замкнут" : "Замкнут");
+
+        int potentiometer_raw_value = get_potentiometer();
+        ESP_LOGI(TAG, "Сырое значение АЦП: %d", potentiometer_raw_value);
+
+        vTaskDelay(SLEEP_WAKEUP_TIMER / portTICK_PERIOD_MS);
+    }
 
     // --- 3. Настройка источников пробуждения для СЛЕДУЮЩЕГО глубокого сна ---
     next_wakeup_config();

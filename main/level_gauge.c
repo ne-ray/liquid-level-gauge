@@ -91,26 +91,27 @@ void init_potentiometer(void)
     // ESP_LOGI(TAG, "Канал АЦП (GPIO%d) сконфигурирован.", POTENTIOMETER_PIN_1);
 }
 
-void get_clouser_pin1(void)
+int get_clouser_pin1(void)
 {
     // 3. Чтение состояния входного контакта
     closure_1_state = gpio_get_level(CLOSURE_PIN_1);
 
-    // ESP_LOGI(TAG, "Состояние контакта 1: %s", closure_1_state ? "Не замкнут" : "Замкнут");
+    return closure_1_state;
 }
 
-void get_clouser_pin2(void)
+int get_clouser_pin2(void)
 {
     // 3. Чтение состояния входного контакта
     closure_2_state = gpio_get_level(CLOSURE_PIN_2);
 
-    // ESP_LOGI(TAG, "Состояние контакта 2: %s", closure_2_state ? "Не замкнут" : "Замкнут");
+    return closure_2_state;
 }
 
-void get_potentiometer(void)
+int get_potentiometer(void)
 {
     ESP_ERROR_CHECK(adc_oneshot_read(adc1_handle, ADC_CHANNEL_POT, &potentiometer_raw_value));
-    // ESP_LOGI(TAG, "Сырое значение АЦП: %d", potentiometer_raw_value);
+
+    return potentiometer_raw_value;
 }
 
 void config_next_wakeup_level_gauge(void)
