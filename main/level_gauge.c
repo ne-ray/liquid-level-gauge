@@ -54,7 +54,7 @@ void led_flash(int times, int delay_ms)
     }
 }
 
-void led_init(void)
+void init_led(void)
 {
     // LED PIN
     gpio_reset_pin(LED_PIN);

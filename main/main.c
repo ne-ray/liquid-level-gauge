@@ -16,7 +16,7 @@ void app_main(void)
 {
     // 1. Инициализация светодиода (делается при каждом пробуждении)
     ESP_LOGI(TAG, "Configured to GPIO LED!");
-    led_init();
+    init_led();
 
     init_clouser_pins();
     init_potentiometer();

@@ -26,7 +26,7 @@ void led_flash(int times, int delay_ms);
 /**
  * @brief Initialize the LED GPIO.
  */
-static void led_init(void);
+static void init_led(void);
 
 /**
  * @brief Initialize the closure pins.
