@@ -67,10 +67,10 @@ void app_main(void)
     while (1)
     {
         int closure_1_state = get_clouser_pin1();
-        ESP_LOGI(TAG, "Состояние контакта 1: %s", closure_1_state ? "Не замкнут" : "Замкнут");
+        ESP_LOGI(TAG, "Состояние контакта 1: %s", closure_1_state ? "Замкнут" : "Не замкнут");
 
         int closure_2_state = get_clouser_pin2();
-        ESP_LOGI(TAG, "Состояние контакта 1: %s", closure_1_state ? "Не замкнут" : "Замкнут");
+        ESP_LOGI(TAG, "Состояние контакта 2: %s", closure_2_state ? "Замкнут" : "Не замкнут");
 
         int potentiometer_raw_value = get_potentiometer();
         ESP_LOGI(TAG, "Сырое значение АЦП: %d", potentiometer_raw_value);

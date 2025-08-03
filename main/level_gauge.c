@@ -19,26 +19,12 @@
 #define ADC_UNIT ADC_UNIT_1           // Используем ADC1
 #define ADC_CHANNEL_POT ADC_CHANNEL_2 // Соответствует GPIO2 для ADC1
 
-static uint8_t led_state = 0;
-static uint8_t closure_1_state = 0;
-static uint8_t closure_2_state = 0;
-
 static adc_oneshot_unit_handle_t adc1_handle;
-static int potentiometer_raw_value = 0;
 
 void led_set_state(bool power)
 {
-    if (power)
-    {
-        led_state = 0;
-    }
-    else
-    {
-        led_state = 1;
-    }
-
     /* Set the GPIO level according to the state (LOW or HIGH)*/
-    gpio_set_level(LED_PIN, led_state);
+    gpio_set_level(LED_PIN, !power);
 }
 
 // --- Функция мигания светодиодом ---
@@ -94,21 +80,20 @@ void init_potentiometer(void)
 int get_clouser_pin1(void)
 {
     // 3. Чтение состояния входного контакта
-    closure_1_state = gpio_get_level(CLOSURE_PIN_1);
-
-    return closure_1_state;
+    // 1 - замкнут, 0 - не замкнут
+    return !gpio_get_level(CLOSURE_PIN_1);
 }
 
 int get_clouser_pin2(void)
 {
     // 3. Чтение состояния входного контакта
-    closure_2_state = gpio_get_level(CLOSURE_PIN_2);
-
-    return closure_2_state;
+    // 1 - замкнут, 0 - не замкнут
+    return !gpio_get_level(CLOSURE_PIN_2);
 }
 
 int get_potentiometer(void)
 {
+    static int potentiometer_raw_value = 0;
     ESP_ERROR_CHECK(adc_oneshot_read(adc1_handle, ADC_CHANNEL_POT, &potentiometer_raw_value));
 
     return potentiometer_raw_value;
@@ -121,7 +106,7 @@ void config_next_wakeup_level_gauge(void)
     // init_pin1();
 
     // Если контакт замкнут - будем просыпаться по таймауту, иначе будем ожидать замыкания
-    if (closure_1_state == 0)
+    if (get_clouser_pin1() == 0)
     {
         // gpio_pullup_en(CLOSURE_PIN_1);    // Включить подтяжку вверх для режима глубокого сна
         // gpio_pulldown_dis(CLOSURE_PIN_1); // Отключить подтяжку вниз
