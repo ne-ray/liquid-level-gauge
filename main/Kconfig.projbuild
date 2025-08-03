@@ -1,4 +1,4 @@
-menu "Example Configuration"
+menu "Liquid level gauge Configuration"
 
     orsource "$IDF_PATH/examples/common_components/env_caps/$IDF_TARGET/Kconfig.env_caps"
 
@@ -8,6 +8,16 @@ menu "Example Configuration"
         default 15
         help
             GPIO number (IOxx) LED.
+
+    config BUTTON_ZIGBEE_CONNECT_PIN
+        int "GPIO number for Zigbee connect button"
+        range ENV_GPIO_RANGE_MIN ENV_GPIO_OUT_RANGE_MAX
+        default 9
+
+    config ESP_SLEEP_WAKEUP_TIMER
+        int "Wakeup from deep sleep period in ms"
+        range 10 3600000
+        default 10000
 
     config CLOSURE_PIN_1
         int "Contact number 1 for check closure"
@@ -23,10 +33,5 @@ menu "Example Configuration"
         int "Contact number 1 for meter potentiometer"
         range ENV_GPIO_RANGE_MIN ENV_GPIO_OUT_RANGE_MAX
         default 2
-
-    config ESP_SLEEP_WAKEUP_TIMER
-        int "Wakeup from deep sleep period in ms"
-        range 10 3600000
-        default 10000
 
 endmenu
