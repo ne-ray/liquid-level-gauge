@@ -1,6 +1,4 @@
 #include "esp_zigbee_core.h"
-#include "level_gauge.h"
-#include "led.h"
 
 /* Zigbee configuration */
 #define INSTALLCODE_POLICY_ENABLE false /* enable the install code policy for security */

@@ -4,13 +4,13 @@
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
 #include "ha/esp_zigbee_ha_standard.h"
+#include "led.h"
 
 #if !defined ZB_ED_ROLE
 #error Define ZB_ED_ROLE in idf.py menuconfig to compile light (End Device) source code.
 #endif
 
-static const char *TAG = "ESP_ZB_ON_OFF_LIGHT";
-#define BLINK_GPIO 15
+static const char *TAG = "liquid_level_gauge_ZB";
 
 /********************* Define functions **************************/
 static esp_err_t deferred_driver_init(void)
@@ -148,14 +148,3 @@ static void esp_zb_task(void *pvParameters)
     ESP_ERROR_CHECK(esp_zb_start(false));
     esp_zb_stack_main_loop();
 }
-
-// void app_main(void)
-// {
-//     esp_zb_platform_config_t config = {
-//         .radio_config = ESP_ZB_DEFAULT_RADIO_CONFIG(),
-//         .host_config = ESP_ZB_DEFAULT_HOST_CONFIG(),
-//     };
-//     ESP_ERROR_CHECK(nvs_flash_init());
-//     ESP_ERROR_CHECK(esp_zb_platform_config(&config));
-//     xTaskCreate(esp_zb_task, "Zigbee_main", 4096, NULL, 5, NULL);
-// }
